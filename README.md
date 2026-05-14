@@ -39,7 +39,7 @@ expense-tracker/
 - Firebase Database Integration
 - User Authentication
 - 
-## Output Screenshot 
+
 
 ## Author
 

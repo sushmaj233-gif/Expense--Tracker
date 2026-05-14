@@ -1,109 +1,178 @@
-const balance = document.getElementById("balance");
-const money_plus = document.getElementById("money-plus");
-const money_minus = document.getElementById("money-minus");
-const list = document.getElementById("list");
-const form = document.getElementById("form");
-const text = document.getElementById("text");
-const amount = document.getElementById("amount");
+const balance=document.getElementById("balance");
+const money_plus=document.getElementById("money-plus");
+const money_minus=document.getElementById("money-minus");
+const list=document.getElementById("list");
+const form=document.getElementById("form");
 
-let transactions =
-  JSON.parse(localStorage.getItem("transactions")) || [];
+const text=document.getElementById("text");
+const amount=document.getElementById("amount");
+const category=document.getElementById("category");
+const date=document.getElementById("date");
 
-function addTransactionDOM(transaction, index){
+const search=document.getElementById("search");
+const clearBtn=document.getElementById("clearBtn");
 
-  const sign = transaction.amount < 0 ? "-" : "+";
+let transactions=
+JSON.parse(
+localStorage.getItem("transactions")
+)||[];
 
-  const item = document.createElement("li");
+function addTransactionDOM(transaction,index){
 
-  item.innerHTML = `
-    ${transaction.text}
-    <span>${sign}₹${Math.abs(transaction.amount)}</span>
-    <button class="delete-btn"
-      onclick="removeTransaction(${index})">
-      X
-    </button>
-  `;
+const item=document.createElement("li");
 
-  list.appendChild(item);
+item.innerHTML=`
+<div>
+<b>${transaction.text}</b>
+<br>
+${transaction.category}
+<br>
+${transaction.date}
+</div>
+
+<div>
+₹${transaction.amount}
+
+<button
+class="delete-btn"
+onclick="removeTransaction(${index})"
+>
+X
+</button>
+</div>
+`;
+
+list.appendChild(item);
+
 }
 
 function updateValues(){
 
-  const amounts =
-    transactions.map(transaction => transaction.amount);
+const amounts=
+transactions.map(
+t=>t.amount
+);
 
-  const total = amounts
-    .reduce((acc, item) => acc + item, 0)
-    .toFixed(2);
+const total=
+amounts.reduce(
+(acc,item)=>acc+item,
+0
+);
 
-  const income = amounts
-    .filter(item => item > 0)
-    .reduce((acc, item) => acc + item, 0)
-    .toFixed(2);
+const income=
+amounts
+.filter(item=>item>0)
+.reduce(
+(acc,item)=>acc+item,
+0
+);
 
-  const expense = (
-    amounts
-      .filter(item => item < 0)
-      .reduce((acc, item) => acc + item, 0) * -1
-  ).toFixed(2);
+const expense=
+amounts
+.filter(item=>item<0)
+.reduce(
+(acc,item)=>acc+item,
+0
+)*-1;
 
-  balance.innerText = `₹${total}`;
-  money_plus.innerText = `₹${income}`;
-  money_minus.innerText = `₹${expense}`;
+balance.innerText=`₹${total}`;
+money_plus.innerText=`₹${income}`;
+money_minus.innerText=`₹${expense}`;
+
 }
 
 function removeTransaction(index){
-  transactions.splice(index,1);
 
-  updateLocalStorage();
-  init();
+transactions.splice(index,1);
+
+updateLocalStorage();
+
+init();
+
 }
 
 function updateLocalStorage(){
-  localStorage.setItem(
-    "transactions",
-    JSON.stringify(transactions)
-  );
+
+localStorage.setItem(
+"transactions",
+JSON.stringify(transactions)
+);
+
 }
 
 function init(){
 
-  list.innerHTML = "";
+list.innerHTML="";
 
-  transactions.forEach((transaction,index) => {
-    addTransactionDOM(transaction,index);
-  });
+transactions.forEach(
+(transaction,index)=>
+addTransactionDOM(transaction,index)
+);
 
-  updateValues();
+updateValues();
+
 }
 
-function addTransaction(e){
+form.addEventListener(
+"submit",
+(e)=>{
 
-  e.preventDefault();
+e.preventDefault();
 
-  if(
-    text.value.trim() === "" ||
-    amount.value.trim() === ""
-  ){
-    alert("Please enter description and amount");
-    return;
-  }
+const transaction={
 
-  const transaction = {
-    text:text.value,
-    amount:+amount.value
-  };
+text:text.value,
+amount:+amount.value,
+category:category.value,
+date:date.value
 
-  transactions.push(transaction);
+};
 
-  updateLocalStorage();
+transactions.push(transaction);
 
-  init();
+updateLocalStorage();
 
-  text.value = "";
-  amount.value = "";
+init();
+
+form.reset();
+
 }
+);
 
-form.addEventListener("submit", addTransaction);
+clearBtn.addEventListener(
+"click",
+()=>{
+
+transactions=[];
+
+updateLocalStorage();
+
+init();
+
+}
+);
+
+search.addEventListener(
+"keyup",
+(e)=>{
+
+const term=
+e.target.value.toLowerCase();
+
+document.querySelectorAll(
+"#list li"
+).forEach(item=>{
+
+item.style.display=
+item.innerText
+.toLowerCase()
+.includes(term)
+?"flex"
+:"none";
+
+});
+
+}
+);
 
 init();
