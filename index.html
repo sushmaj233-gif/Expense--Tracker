@@ -1,96 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Expense Tracker</title>
-
-<link rel="stylesheet" href="style.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A modern personal expense tracker with income, expenses, categories, search, filters and analytics.">
+  <title>ExpenseFlow — Personal Expense Tracker</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+  <main class="app">
+    <header class="hero">
+      <div>
+        <span class="eyebrow">PERSONAL FINANCE</span>
+        <h1>ExpenseFlow</h1>
+        <p>Track your money, understand your spending, stay in control.</p>
+      </div>
+      <div class="hero-badge">100% Local &amp; Private</div>
+    </header>
 
-<div class="container">
+    <section class="balance-card">
+      <div>
+        <p class="label">CURRENT BALANCE</p>
+        <h2 id="balance">₹0</h2>
+        <p id="status" class="status">Add your first transaction to get started.</p>
+      </div>
+      <div class="balance-icon">₹</div>
+    </section>
 
-<h1>Expense Tracker</h1>
+    <section class="summary-grid" aria-label="Financial summary">
+      <article class="summary-card income-card">
+        <span>Income</span>
+        <strong id="money-plus">₹0</strong>
+      </article>
+      <article class="summary-card expense-card">
+        <span>Expenses</span>
+        <strong id="money-minus">₹0</strong>
+      </article>
+      <article class="summary-card saving-card">
+        <span>Savings Rate</span>
+        <strong id="saving-rate">0%</strong>
+      </article>
+    </section>
 
-<div class="balance-container">
-<h2>Your Balance</h2>
-<h3 id="balance">₹0</h3>
-</div>
+    <section class="grid">
+      <div class="panel">
+        <div class="panel-heading">
+          <div>
+            <h2>Add Transaction</h2>
+            <p>Record income or an expense.</p>
+          </div>
+        </div>
 
-<div class="summary">
+        <form id="form">
+          <label for="text">Description</label>
+          <input type="text" id="text" maxlength="60" placeholder="e.g. Grocery shopping" required>
 
-<div class="income">
-<h4>Income</h4>
-<p id="money-plus">₹0</p>
-</div>
+          <div class="two-col">
+            <div>
+              <label for="amount">Amount</label>
+              <input type="number" id="amount" min="0.01" step="0.01" placeholder="e.g. 500" required>
+            </div>
+            <div>
+              <label for="type">Type</label>
+              <select id="type">
+                <option value="expense">Expense</option>
+                <option value="income">Income</option>
+              </select>
+            </div>
+          </div>
 
-<div class="expense">
-<h4>Expense</h4>
-<p id="money-minus">₹0</p>
-</div>
+          <div class="two-col">
+            <div>
+              <label for="category">Category</label>
+              <select id="category">
+                <option>Food</option>
+                <option>Travel</option>
+                <option>Shopping</option>
+                <option>Salary</option>
+                <option>Entertainment</option>
+                <option>Bills</option>
+                <option>Education</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label for="date">Date</label>
+              <input type="date" id="date" required>
+            </div>
+          </div>
 
-</div>
+          <button class="primary-btn" type="submit">+ Add Transaction</button>
+        </form>
+      </div>
 
-<h3>Transactions</h3>
+      <div class="panel">
+        <div class="panel-heading">
+          <div>
+            <h2>Spending by Category</h2>
+            <p>See where your expenses are going.</p>
+          </div>
+        </div>
+        <div id="category-chart" class="chart" aria-live="polite"></div>
+        <p id="chart-empty" class="empty-chart">Add expenses to see your spending breakdown.</p>
+      </div>
+    </section>
 
-<ul id="list"></ul>
+    <section class="panel transactions-panel">
+      <div class="panel-heading transactions-heading">
+        <div>
+          <h2>Transactions</h2>
+          <p id="transaction-count">0 transactions</p>
+        </div>
+        <button id="clearBtn" class="danger-outline" type="button">Clear All</button>
+      </div>
 
-<h3>Add New Transaction</h3>
+      <div class="filters">
+        <input type="search" id="search" placeholder="Search transactions...">
+        <select id="filter-category">
+          <option value="all">All categories</option>
+          <option>Food</option>
+          <option>Travel</option>
+          <option>Shopping</option>
+          <option>Salary</option>
+          <option>Entertainment</option>
+          <option>Bills</option>
+          <option>Education</option>
+          <option>Other</option>
+        </select>
+        <select id="filter-type">
+          <option value="all">All types</option>
+          <option value="income">Income</option>
+          <option value="expense">Expense</option>
+        </select>
+      </div>
 
-<input
-type="text"
-id="search"
-placeholder="Search transaction"
->
+      <ul id="list"></ul>
+      <div id="empty-state" class="empty-state">
+        <div class="empty-icon">+</div>
+        <h3>No transactions yet</h3>
+        <p>Add your first transaction above to start tracking your finances.</p>
+      </div>
+    </section>
 
-<button id="clearBtn">
-Clear All
-</button>
+    <footer>ExpenseFlow • Built with HTML, CSS &amp; JavaScript • Data stays in your browser</footer>
+  </main>
 
-<form id="form">
-
-<input
-type="text"
-id="text"
-placeholder="Enter description"
-required
-/>
-
-<input
-type="number"
-id="amount"
-placeholder="Enter amount (+income,-expense)"
-required
-/>
-
-<select id="category">
-
-<option>Food</option>
-<option>Travel</option>
-<option>Shopping</option>
-<option>Salary</option>
-<option>Entertainment</option>
-
-</select>
-
-<input
-type="date"
-id="date"
-required
-/>
-
-<button type="submit">
-Add Transaction
-</button>
-
-</form>
-
-</div>
-
-<script src="script.js"></script>
-
+  <script src="script.js"></script>
 </body>
 </html>

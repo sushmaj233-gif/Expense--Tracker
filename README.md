@@ -1,46 +1,22 @@
-# Expense Tracker Web App
+# ExpenseFlow — Personal Expense Tracker
 
-A modern and responsive Expense Tracker Web Application built using HTML, CSS, and JavaScript.
+A polished, responsive expense tracker built with HTML, CSS and vanilla JavaScript.
 
 ## Features
+- Income and expense tracking
+- Automatic balance and savings-rate calculation
+- Expense breakdown by category
+- Search and category/type filters
+- Transaction deletion and clear-all option
+- Responsive mobile-friendly interface
+- Browser `localStorage` persistence
+- No external backend required
 
-- Add Income and Expenses
-- Real-time Balance Calculation
-- Transaction History
-- Delete Transactions
-- Local Storage Support
-- Responsive Modern UI
+## Tech Stack
+HTML5 • CSS3 • JavaScript (ES6) • Web Storage API
 
-## Technologies Used
+## Run
+Open `index.html` in a modern browser.
 
-- HTML5
-- CSS3
-- JavaScript
-
-## How to Run
-
-1. Download the project
-2. Open folder in VS Code
-3. Run `index.html` using Live Server
-
-## Project Structure
-
-expense-tracker/
-│
-├── index.html
-├── style.css
-├── script.js
-└── README.md
-
-## Future Improvements
-
-- Add Charts and Analytics
-- Add Dark/Light Theme
-- Firebase Database Integration
-- User Authentication
-- 
-
-
-## Author
-
-Developed by Sushma JS
+## Portfolio Note
+This project is intended as a front-end portfolio demonstration of UI design, DOM manipulation, state management, filtering, calculations and browser persistence.
